@@ -18,6 +18,11 @@ interpreter that uses CLI tools.
 * interpreter returns data to harvest
 * harvest output JSON object
 
+### Example
+
+For an example of how to use resin-harvest in the browser, take a look
+at the examples folder.
+
 ### Schemas
 
 Schemas should use the [JSON schema][jsonschema] format. 

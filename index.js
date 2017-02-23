@@ -1,30 +1,23 @@
 const hollowModel = require('./hollowModel')
+const Emitter = require('./class/emitter')
 
-class Harvest {
+class Harvest extends Emitter {
   constructor(schema, interpreter) {
-    this.channels = {}
+    super()
     this.interpreter = interpreter
+    this.schema = schema
     this.model = hollowModel(schema)
-  }
-
-  emit(channel, payload) {
-    if (!this.channels.hasOwnProperty(channel)) {
-      return
-    }
-
-    this.channels[channel].forEach((callback) => callback(payload))
-  }
-
-  on(channel, callback) {
-    if (!this.channels.hasOwnProperty(channel)) {
-      this.channels[channel] = []
-    }
-    this.channels[channel].push(callback)
+    this.gather()
   }
 
   gather() {
-    this.interpreter.run()
-    this.emit('done', this.model)
+    this.interpreter.run(this.schema)
+    this.interpreter.on('done', (payload) => {
+      this.emit('done', payload)
+    })
+    this.interpreter.on('update', (payload) => {
+      this.emit('update', payload)
+    })
   }
 }
 
