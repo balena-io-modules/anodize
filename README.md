@@ -63,7 +63,8 @@ gathering information.
 
 ### Reference material
 
-• [JSON schema][jsonschema]
+* [JSON schema][jsonschema]
+* [Online schema generator](http://jsonschema.net/)
 
 
 [jsonschema]: http://json-schema.org/
