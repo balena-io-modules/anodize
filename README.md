@@ -8,15 +8,17 @@ used to generate JSON object by asking the user to fill out data,
 using an "interpreter".  
 The interpreter is responsible for retrieving input from the user and
 should use a generic API, so you can easily swap them in and out.
-For example we would want an interpreter that use HTML forms and an
-interpreter that uses CLI tools.
+For example you might want an interpreter that uses HTML forms or an
+interpreter for use in a CLI tool.
+
+The harvest workflow looks like this:
 
 * configure harvest to use an interpreter
 * provide harvest with a schema
 * harvest requests data from the interpreter 
 * interpreter gathers data using the provided schema
 * interpreter returns data to harvest
-* harvest output JSON object
+* harvest outputs JSON object
 
 ### Example
 
