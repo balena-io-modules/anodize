@@ -103,6 +103,34 @@ The "title" and "description" attributes are recommended but optional,
 if they are provided then they are used by the interpreter when
 gathering information.
 
+Alternatively the schema can be generated from a plain javascript object using
+the `Harvest.expand()` method. Values can optionally be provided as type
+constructors, otherwise they are automatically detected.
+
+    const model = {
+      quickBoot: Boolean,
+      gpuMemory: Number,
+      wifi: {
+        ssid: String,
+        key: String
+      }
+    }
+
+    const schema = Harvest.expand(model)
+
+    // this model would provide the same schema, but is less idiomatic
+    const model2 = {
+      quickBoot: true,
+      gpuMemory: 16,
+      wifi: {
+        ssid: 'WIFI_SSID',
+        key: 'WIFI_KEY'
+      }
+    }
+
+    const schema2 = Harvest.expand(model2)
+  
+
 ### Reference material
 
 * [JSON schema][jsonschema]
