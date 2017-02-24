@@ -25,4 +25,10 @@ const load = () => {
 
 load()
 
+const expand = () => {
+  const exampleSchema = JSON.parse(schemaNode.innerText)
+  schemaNode.innerHTML = '\r' + JSON.stringify(Harvest.expand(exampleSchema), null, 2)
+}
+
 document.getElementById('reloadBtn').addEventListener('click', load, false)
+document.getElementById('expandBtn').addEventListener('click', expand, false)
