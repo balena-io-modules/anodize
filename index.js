@@ -1,3 +1,4 @@
+const jsonSchemaGenerator = require('json-schema-generator')
 const hollowModel = require('./hollowModel')
 const Emitter = require('./class/emitter')
 
@@ -18,6 +19,10 @@ class Harvest extends Emitter {
     this.interpreter.on('update', (payload) => {
       this.emit('update', payload)
     })
+  }
+
+  static expand(object) {
+    return jsonSchemaGenerator(object)
   }
 }
 

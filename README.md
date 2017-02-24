@@ -20,6 +20,41 @@ The harvest workflow looks like this:
 * interpreter returns data to harvest
 * harvest outputs JSON object
 
+### Usage
+
+    const Harvest = require('resin-harvest')
+    const DOMInterpreter = require('resin-harvest/DOMInterpreter')
+    const exampleSchema = {
+      "type": "object",
+      "properties": {
+        "gpuMemory": {
+          "type": "number"
+        }
+      },
+      "required": [
+        "gpuMemory"
+      ]
+    }
+
+    const interpreter = new DOMInterpreter(document.getElementById('root'))
+
+    const harvest = new Harvest(exampleSchema, interpreter)
+
+    harvest.on('done', (payload) => {
+      console.log(payload)
+    })
+
+You can also use `Harvest.expand()` to convert a plain javascript object into
+a JSON schema object.
+
+    const exampleSchema = Harver.expand({ gpuMemory: 16 })
+
+    const interpreter = new DOMInterpreter(rootNode)
+    const harvest = new Harvest(exampleSchema, interpreter)
+
+### Interpreters
+
+
 ### Example
 
 For an example of how to use resin-harvest in the browser, take a look
