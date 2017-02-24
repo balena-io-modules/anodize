@@ -8,7 +8,7 @@
     "build": "browserify example/dom/main.js -o example/dom/bundle.js",
     "watch": "watchify example/dom/main.js -o example/dom/bundle.js -v"
   },
-  "author": "",
+  "author": "Lucian Buzzo <lucian@resin.io>",
   "license": "Apache-2.0",
   "dependencies": {
     "chalk": "^1.1.3",
