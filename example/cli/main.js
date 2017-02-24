@@ -1,7 +1,7 @@
-const Harvest = require('../../src')
+const harvest = require('../../src')
 const CliInterpreter = require('../../src/interpreters/cli')
 
-const exampleSchema = {
+const schema = {
   "id": "/PiApp",
   "type": "object",
   "properties": {
@@ -49,11 +49,10 @@ const exampleSchema = {
 
 const interpreter = new CliInterpreter()
 
-const harvest = new Harvest(exampleSchema, interpreter)
-
-harvest.on('update', (payload) => {
-  console.log(payload)
+harvest.gather({
+  interpreter,
+  schema
 })
-harvest.on('done', (payload) => {
-  console.log(payload)
+.then(result => {
+  console.log(result)
 })

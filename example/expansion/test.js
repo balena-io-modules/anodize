@@ -1,4 +1,4 @@
-const Harvest = require('../../src')
+const harvest = require('../../src')
 
 const model = {
   quickBoot: Boolean,
@@ -15,4 +15,4 @@ const model = {
   ]
 }
 
-console.log(Harvest.expand(model))
+console.log(harvest.expand(model))

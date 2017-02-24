@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-const Harvest = require('../../src')
+const harvest = require('../../src')
 const DOMInterpreter = require('../../src/interpreters/dom')
 
 const outputNode = document.getElementById('output')
@@ -10,17 +10,22 @@ const load = () => {
   outputNode.innerHTML = ''
   rootNode.innerHTML = ''
 
-  const exampleSchema = JSON.parse(schemaNode.innerText)
+  const schema = JSON.parse(schemaNode.innerText)
   const interpreter = new DOMInterpreter(rootNode)
 
-  const harvest = new Harvest(exampleSchema, interpreter)
-  harvest.on('update', (payload) => {
+  const onUpdate = (payload) => {
     console.log(payload)
     outputNode.innerHTML = '\r' + JSON.stringify(payload, null, 2)
+  }
+
+  harvest.gather({
+    schema,
+    interpreter,
+    onUpdate
   })
-  harvest.on('done', (payload) => {
-    console.log(payload)
-    outputNode.innerHTML = '\r' + JSON.stringify(payload, null, 2)
+  .then(result => {
+    console.log(result)
+    outputNode.innerHTML = '\r' + JSON.stringify(result, null, 2)
   })
 }
 
@@ -28,13 +33,13 @@ load()
 
 const expand = () => {
   const exampleSchema = JSON.parse(schemaNode.innerText)
-  schemaNode.innerHTML = '\r' + JSON.stringify(Harvest.expand(exampleSchema), null, 2)
+  schemaNode.innerHTML = '\r' + JSON.stringify(harvest.expand(exampleSchema), null, 2)
 }
 
 document.getElementById('reloadBtn').addEventListener('click', load, false)
 document.getElementById('expandBtn').addEventListener('click', expand, false)
 
-},{"../../src":368,"../../src/interpreters/dom":369}],2:[function(require,module,exports){
+},{"../../src":367,"../../src/interpreters/dom":368}],2:[function(require,module,exports){
 var asn1 = exports;
 
 asn1.bignum = require('bn.js');
@@ -66950,132 +66955,52 @@ class Emitter {
 module.exports = Emitter
 
 },{}],367:[function(require,module,exports){
-const cloneJSON = (source) => {
-  return JSON.parse(JSON.stringify(source))
-}
-
-const defaults = (schema) => {
-  if (schema.type === 'object') {
-
-    if (!schema.properties) {
-      return {}
-    }
-
-    for (var key in schema.properties) {
-      if (schema.properties.hasOwnProperty(key)) {
-        schema.properties[key] = defaults(schema.properties[key])
-
-        if (typeof schema.properties[key] === 'undefined') {
-          delete schema.properties[key]
-        }
-      }
-    }
-
-    return schema.properties
-
-  } else if (schema.type === 'array') {
-
-    if (!schema.items) {
-      return []
-    }
-
-    // minimum item count
-    var ct = schema.minItems || 0
-    // tuple-typed arrays
-    if (schema.items.constructor === Array) {
-      let values = schema.items.map(function (item) {
-        return defaults(item)
-      })
-      // remove undefined items at the end (unless required by minItems)
-      for (let i = values.length - 1; i >= 0; i--) {
-        if (typeof values[i] !== 'undefined') {
-          break
-        }
-        if (i + 1 > ct) {
-          values.pop()
-        }
-      }
-      return values
-    }
-    // object-typed arrays
-    var value = defaults(schema.items)
-    if (typeof value === 'undefined') {
-      return []
-    } else {
-      var values = []
-      for (var i = 0; i < Math.max(1, ct); i++) {
-        values.push(cloneJSON(value))
-      }
-      return values
-    }
-
-  } else {
-    return null
-  }
-
-}
-
-module.exports = (schema) => defaults(cloneJSON(schema))
-
-},{}],368:[function(require,module,exports){
 const jsonSchemaGenerator = require('json-schema-generator')
 const _ = require('lodash')
-const hollowModel = require('./hollowModel')
-const Emitter = require('./class/emitter')
 
-class Harvest extends Emitter {
-  constructor(schema, interpreter) {
-    super()
-    this.interpreter = interpreter
-    this.schema = schema
-    this.model = hollowModel(schema)
-    this.gather()
-  }
+exports.expand = (object) => {
+  let clone = _.cloneDeep(object)
+  // Convert type functions into a value that jsonSchemaGenerator understands
+  const mapTypes = (object) => {
+    const mapped = _.mapValues(object, (value) => {
+      if (value === Number) {
+        value = 1
+      } else if (value === String) {
+        value = ''
+      } else if (value === Boolean) {
+        value = true
+      } else if (value === Object) {
+        value = {}
+      } else if (value === Array) {
+        value = []
+      } else if (_.isPlainObject(value)) {
+        value = mapTypes(value)
+      } else if (_.isArray(value) && value.length) {
+        value = mapTypes(value[0])
+      }
 
-  gather() {
-    this.interpreter.run(this.schema)
-    this.interpreter.on('done', (payload) => {
-      this.emit('done', payload)
+      return value
     })
-    this.interpreter.on('update', (payload) => {
-      this.emit('update', payload)
-    })
+
+    return mapped
   }
 
-  static expand(object) {
-    let clone = _.cloneDeep(object)
-    // Convert type functions into a value that jsonSchemaGenerator understands
-    const mapTypes = (object) => {
-      const mapped = _.mapValues(object, (value) => {
-        if (value === Number) {
-          value = 1
-        } else if (value === String) {
-          value = ''
-        } else if (value === Boolean) {
-          value = true
-        } else if (value === Object) {
-          value = {}
-        } else if (value === Array) {
-          value = []
-        } else if (_.isPlainObject(value)) {
-          value = mapTypes(value)
-        } else if (_.isArray(value) && value.length) {
-          value = mapTypes(value[0])
-        }
-
-        return value
-      })
-
-      return mapped
-    }
-
-    return jsonSchemaGenerator(mapTypes(clone))
-  }
+  return jsonSchemaGenerator(mapTypes(clone))
 }
 
-module.exports = Harvest
+exports.gather = (options) => {
+  return new Promise((resolve) => {
+    const { interpreter, schema, onUpdate } = options
+    interpreter.run(schema)
+    if (onUpdate) {
+      interpreter.on('update', onUpdate)
+    }
 
-},{"./class/emitter":366,"./hollowModel":367,"json-schema-generator":118,"lodash":128}],369:[function(require,module,exports){
+    interpreter.on('done', payload => resolve(payload))
+  })
+}
+
+},{"json-schema-generator":118,"lodash":128}],368:[function(require,module,exports){
 const React = require('react')
 const { render } = require('react-dom')
 const Form = require('react-jsonschema-form').default

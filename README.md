@@ -23,9 +23,9 @@ The harvest workflow looks like this:
 ### Usage
 
 ``` js
-const Harvest = require('resin-harvest')
+const harvest = require('resin-harvest')
 const DOMInterpreter = require('resin-harvest/DOMInterpreter')
-const exampleSchema = {
+const schema = {
   "type": "object",
   "properties": {
     "gpuMemory": {
@@ -39,21 +39,19 @@ const exampleSchema = {
 
 const interpreter = new DOMInterpreter(document.getElementById('root'))
 
-const harvest = new Harvest(exampleSchema, interpreter)
-
-harvest.on('done', (payload) => {
+harvest.gather({ schema, interpreter })
+.then(result =>
   console.log(payload)
 })
 ```
 
-You can also use `Harvest.expand()` to convert a plain javascript object into
+You can also use `harvest.expand()` to convert a plain javascript object into
 a JSON schema object.
 
 ``` js
-const exampleSchema = Harver.expand({ gpuMemory: 16 })
+const schema = harvest.expand({ gpuMemory: 16 })
 
-const interpreter = new DOMInterpreter(rootNode)
-const harvest = new Harvest(exampleSchema, interpreter)
+harvest.gather({ schema, interpreter })
 ```
 
 ### Interpreters
@@ -125,7 +123,7 @@ const model = {
   }
 }
 
-const schema = Harvest.expand(model)
+const schema = harvest.expand(model)
 
 // this model would provide the same schema, but is less idiomatic
 const model2 = {
