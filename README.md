@@ -22,35 +22,39 @@ The harvest workflow looks like this:
 
 ### Usage
 
-    const Harvest = require('resin-harvest')
-    const DOMInterpreter = require('resin-harvest/DOMInterpreter')
-    const exampleSchema = {
-      "type": "object",
-      "properties": {
-        "gpuMemory": {
-          "type": "number"
-        }
-      },
-      "required": [
-        "gpuMemory"
-      ]
+``` js
+const Harvest = require('resin-harvest')
+const DOMInterpreter = require('resin-harvest/DOMInterpreter')
+const exampleSchema = {
+  "type": "object",
+  "properties": {
+    "gpuMemory": {
+      "type": "number"
     }
+  },
+  "required": [
+    "gpuMemory"
+  ]
+}
 
-    const interpreter = new DOMInterpreter(document.getElementById('root'))
+const interpreter = new DOMInterpreter(document.getElementById('root'))
 
-    const harvest = new Harvest(exampleSchema, interpreter)
+const harvest = new Harvest(exampleSchema, interpreter)
 
-    harvest.on('done', (payload) => {
-      console.log(payload)
-    })
+harvest.on('done', (payload) => {
+  console.log(payload)
+})
+```
 
 You can also use `Harvest.expand()` to convert a plain javascript object into
 a JSON schema object.
 
-    const exampleSchema = Harver.expand({ gpuMemory: 16 })
+``` js
+const exampleSchema = Harver.expand({ gpuMemory: 16 })
 
-    const interpreter = new DOMInterpreter(rootNode)
-    const harvest = new Harvest(exampleSchema, interpreter)
+const interpreter = new DOMInterpreter(rootNode)
+const harvest = new Harvest(exampleSchema, interpreter)
+```
 
 ### Interpreters
 
@@ -66,38 +70,42 @@ Schemas should use the [JSON schema][jsonschema] format.
 
 For example, given the following dry JSON design from reconfix:
 
-    {
-      "gpuMemory": <number>,
-      "wifi": {
-        "ssid": <string>,
-        "key": <string>
-      }
-    }
+```
+{
+  "gpuMemory": <number>,
+  "wifi": {
+    "ssid": <string>,
+    "key": <string>
+  }
+}
+```
 
 We would generate a schema that looked like this:
 
-    {
-      "id": "/PiYoutubeApp",
+``` json
+{
+  "id": "/PiYoutubeApp",
+  "type": "object",
+  "properties": {
+    "gpuMemory": {
+      "type": "number"
+    },
+    "wifi": {
       "type": "object",
       "properties": {
-        "gpuMemory": {
-          "type": "number"
+        "ssid": {
+          "type": "string",
         },
-        "wifi": {
-          "type": "object",
-          "properties": {
-            "ssid": {
-              "type": "string",
-            },
-            "key": {
-              "type": "string",
-            }
-          },
-          "required": ["ssid", "key"]
-        },
+        "key": {
+          "type": "string",
+        }
       },
-      "required": ["gpuMemory", "wifi"]
-    }
+      "required": ["ssid", "key"]
+    },
+  },
+  "required": ["gpuMemory", "wifi"]
+}
+```
 
 The "title" and "description" attributes are recommended but optional,
 if they are provided then they are used by the interpreter when
@@ -107,29 +115,30 @@ Alternatively the schema can be generated from a plain javascript object using
 the `Harvest.expand()` method. Values can optionally be provided as type
 constructors, otherwise they are automatically detected.
 
-    const model = {
-      quickBoot: Boolean,
-      gpuMemory: Number,
-      wifi: {
-        ssid: String,
-        key: String
-      }
-    }
+``` js
+const model = {
+  quickBoot: Boolean,
+  gpuMemory: Number,
+  wifi: {
+    ssid: String,
+    key: String
+  }
+}
 
-    const schema = Harvest.expand(model)
+const schema = Harvest.expand(model)
 
-    // this model would provide the same schema, but is less idiomatic
-    const model2 = {
-      quickBoot: true,
-      gpuMemory: 16,
-      wifi: {
-        ssid: 'WIFI_SSID',
-        key: 'WIFI_KEY'
-      }
-    }
+// this model would provide the same schema, but is less idiomatic
+const model2 = {
+  quickBoot: true,
+  gpuMemory: 16,
+  wifi: {
+    ssid: 'WIFI_SSID',
+    key: 'WIFI_KEY'
+  }
+}
 
-    const schema2 = Harvest.expand(model2)
-  
+const schema2 = Harvest.expand(model2)
+```
 
 ### Reference material
 
