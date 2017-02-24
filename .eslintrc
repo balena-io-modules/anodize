@@ -16,7 +16,7 @@
     "regexYFlag": true,                        // enable the regular expression y flag
     "templateStrings": true,                   // enable template strings
     "unicodeCodePointEscapes": true,           // enable code point escapes
-    "jsx": true                                // enable JSX
+    "jsx": false                               // enable JSX
   },
 
 
@@ -36,18 +36,14 @@
   "parserOptions": {
     "sourceType": "module",
     "ecmaFeatures": {
-      "jsx": true
+      "jsx": false
     }
   },
 
   "globals": {
-    // e.g. "angular": true
-    "Npm": true,
-    "$": true
   },
 
   "plugins": [
-    "react",
     "destructuring"
   ],
   "extends": ["plugin:destructuring/recommended"],
@@ -224,8 +220,5 @@
     "max-statements": 0,  // specify the maximum number of statement allowed in a function (off by default)
     "no-bitwise": 1,      // disallow use of bitwise operators (off by default)
     "no-plusplus": 0,     // disallow use of unary operators, ++ and -- (off by default)
-
-    "react/jsx-uses-vars": [2],
-    "react/jsx-no-undef": [2]
   }
 }

@@ -1,5 +1,5 @@
-const Harvest = require('../../index.js')
-const DOMInterpreter = require('../../interpreters/dom')
+const Harvest = require('../../src')
+const DOMInterpreter = require('../../src/interpreters/dom')
 
 const outputNode = document.getElementById('output')
 const rootNode = document.getElementById('root')

@@ -1,4 +1,4 @@
-const Harvest = require('../../index.js')
+const Harvest = require('../../src')
 
 const model = {
   quickBoot: Boolean,

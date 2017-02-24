@@ -1,33 +1,6 @@
-const Harvest = require('../../index.js')
-const CliInterpreter = require('../../interpreters/cli')
+const Harvest = require('../../src')
+const CliInterpreter = require('../../src/interpreters/cli')
 
-/*
-const exampleSchema = {
-  "id": "/PiApp",
-  "type": "object",
-  "properties": {
-    "gpuMemory": {
-      "title": "GPU memory",
-      "description": "GPU memory in megabytes.",
-      "type": "number"
-    },
-    "wifi": {
-      "title": "Wifi",
-      "type": "object",
-      "properties": {
-        "ssid": {
-          "type": "string"
-        },
-        "key": {
-          "type": "string"
-        }
-      },
-      "required": ["ssid", "key"]
-    }
-  },
-  "required": ["gpuMemory", "wifi"]
-}
-*/
 const exampleSchema = {
   "id": "/PiApp",
   "type": "object",
