@@ -1,6 +1,8 @@
-## v0.1.0 - 2017-02-23
+## v0.3.0 - 2017-02-26
 
-* Created a working example for implementing resin-harvest in the browser. [Lucian Buzzo]
+* Updated README with travis badge [Lucian Buzzo]
+* Updated README with a link to a live example on github pages. [Lucian Buzzo]
+* Renamed module to anodize. Renamed 'gather' method to 'extract'. [Lucian Buzzo]
 
 ## v0.2.0 - 2017-02-26
 
@@ -10,3 +12,8 @@
 * Switched to using the nodejs EventEmitter class. [Lucian Buzzo]
 * Added some basic unit tests and travis CI integration. [Lucian Buzzo]
 * Basic implementation of CLI interpreter [Lucian Buzzo]
+
+## v0.1.0 - 2017-02-23
+
+* Created a working example for implementing resin-harvest in the browser. [Lucian Buzzo]
+
