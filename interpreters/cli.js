@@ -1,4 +1,4 @@
-const schinquirer = require('inquirer')
+const inquirer = require('inquirer')
 const EventEmitter = require('events')
 const _ = require('lodash')
 const chalk = require('chalk')
@@ -100,7 +100,7 @@ class CliInterpreter extends EventEmitter {
 
   run(schema) {
     const questions = this.generateQuestions(schema)
-    schinquirer.prompt(questions)
+    inquirer.prompt(questions)
     .then((answers) => {
       this.emit('done', answers)
     })

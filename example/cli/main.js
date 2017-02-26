@@ -1,4 +1,4 @@
-const harvest = require('../../src')
+const anodize = require('../../src')
 const CliInterpreter = require('../../interpreters/cli')
 
 const interpreter = CliInterpreter()
@@ -49,7 +49,7 @@ const schema = {
   "required": ["gpuMemory", "wifi"]
 }
 
-harvest.gather({
+anodize.extract({
   interpreter,
   schema
 })

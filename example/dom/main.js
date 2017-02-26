@@ -1,4 +1,4 @@
-const harvest = require('../../src')
+const anodize = require('../../src')
 const DOMInterpreter = require('../../interpreters/dom')
 
 const outputNode = document.getElementById('output')
@@ -17,7 +17,7 @@ const load = () => {
     outputNode.innerHTML = '\r' + JSON.stringify(payload, null, 2)
   }
 
-  harvest.gather({
+  anodize.extract({
     schema,
     interpreter,
     onUpdate
@@ -32,7 +32,7 @@ load()
 
 const expand = () => {
   const exampleSchema = JSON.parse(schemaNode.innerText)
-  schemaNode.innerHTML = '\r' + JSON.stringify(harvest.expand(exampleSchema), null, 2)
+  schemaNode.innerHTML = '\r' + JSON.stringify(anodize.expand(exampleSchema), null, 2)
 }
 
 document.getElementById('reloadBtn').addEventListener('click', load, false)

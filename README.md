@@ -1,30 +1,34 @@
-## Resin harvest
+## Anodize
 
-This module aims to provide a platform agnostic way to gather
-information from a user.  
+Anodize provides a platform agnostic way to gather information from your users.  
 
-The required information is provided as a model schema which will be
-used to generate JSON object by asking the user to fill out data,
+The required information is provided as a model schema which is
+used to generate a JSON object by asking the user to fill out data,
 using an "interpreter".  
 The interpreter is responsible for retrieving input from the user and
-should use a generic API, so you can easily swap them in and out.
+uses a generic API, so you can easily swap them in and out.
 For example you might want an interpreter that uses HTML forms or an
 interpreter for use in a CLI tool.
 
-The harvest workflow looks like this:
+The anodize workflow looks like this:
 
-* configure harvest to use an interpreter
-* provide harvest with a schema
-* harvest requests data from the interpreter 
+* configure anodize to use an interpreter
+* provide anodize with a schema
+* anodize requests data from the interpreter 
 * interpreter gathers data using the provided schema
-* interpreter returns data to harvest
-* harvest outputs JSON object
+* interpreter returns data to anodize
+* anodize outputs JSON object
+
+### Example
+
+For an example of how to use anodize in the browser, take a look
+at the examples folder.
 
 ### Usage
 
 ``` js
-const harvest = require('resin-harvest')
-const DOMInterpreter = require('resin-harvest/interpreters/dom')
+const anodize = require('anodize')
+const DOMInterpreter = require('anodize/interpreters/dom')
 const schema = {
   "type": "object",
   "properties": {
@@ -39,29 +43,29 @@ const schema = {
 
 const interpreter = DOMInterpreter(document.getElementById('root'))
 
-harvest.gather({ schema, interpreter })
+anodize.extract({ schema, interpreter })
 .then(result =>
   console.log(payload)
 })
 ```
 
-You can also use `harvest.expand()` to convert a plain javascript object into
+You can also use `anodize.expand()` to convert a plain javascript object into
 a JSON schema object.
 
 ``` js
-const schema = harvest.expand({ gpuMemory: 16 })
+const schema = anodize.expand({ gpuMemory: 16 })
 
-harvest.gather({ schema, interpreter })
+anodize.extract({ schema, interpreter })
 ```
 
 ### Interpreters
 
 Interpreters provide the interface for users to input values.
 
-Interpreters are loaded separately to the core harvest code so that
+Interpreters are loaded separately to the core anodize code so that
 your application is not bloated by functionality you don't need.
 
-There are currently two interpreters that are bundled with harvest:
+There are currently two interpreters that are bundled with anodize:
 
 #### Dom
 
@@ -78,7 +82,7 @@ from a user. The interpreter is loaded with `require('resin-harver/interpreters/
 #### Creating your own interpreter
 
 You can provide your own interpreter instead of one bundled with
-resin-harvest. Interpreters should typically extend the nodejs
+anodize. Interpreters should typically extend the nodejs
 [EventEmitter][eventemitter] class, though this is not a strict requirement.
 
 An interpreter must have a `.run()` method that takes a JSON schema as
@@ -90,11 +94,6 @@ as the EventEmitter [`emiiter.on()`][eventemitter.on] method.
 Once the data gathering process has finished, the interpreter should
 emit an event named 'done' along with a payload that complies with the
 provided schema. 
-
-### Example
-
-For an example of how to use resin-harvest in the browser, take a look
-at the examples folder.
 
 ### Schemas
 
@@ -144,7 +143,7 @@ if they are provided then they are used by the interpreter when
 gathering information.
 
 Alternatively the schema can be generated from a plain javascript object using
-the `Harvest.expand()` method. You can optionally provide a value as
+the `anodize.expand()` method. You can optionally provide a value as
 a primitive wrapper object, otherwise the type is automatically detected.
 
 ``` js
@@ -157,7 +156,7 @@ const model = {
   }
 }
 
-const schema = harvest.expand(model)
+const schema = anodize.expand(model)
 
 // this model would provide the same schema, but is less idiomatic
 const model2 = {
@@ -169,7 +168,7 @@ const model2 = {
   }
 }
 
-const schema2 = Harvest.expand(model2)
+const schema2 = anodize.expand(model2)
 ```
 
 ### Reference material
