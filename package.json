@@ -4,10 +4,11 @@
   "description": "Gather user input using JSON schemas",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "node tests/*.js",
     "lint": "eslint src",
     "example-build": "browserify example/dom/main.js -o example/dom/bundle.js",
-    "example-watch": "watchify example/dom/main.js -o example/dom/bundle.js -v"
+    "example-watch": "watchify example/dom/main.js -o example/dom/bundle.js -v",
+    "ci": "npm run lint && npm run test"
   },
   "author": "Lucian Buzzo <lucian@resin.io>",
   "license": "Apache-2.0",
@@ -25,6 +26,7 @@
     "browserify": "^14.1.0",
     "eslint": "^3.16.1",
     "eslint-plugin-destructuring": "^2.1.0",
+    "tape": "^4.6.3",
     "watchify": "^3.9.0"
   }
 }
