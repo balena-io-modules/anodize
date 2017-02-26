@@ -1,5 +1,5 @@
 const harvest = require('../../src')
-const CliInterpreter = require('../../src/interpreters/cli')
+const CliInterpreter = require('../../interpreters/cli')
 
 const schema = {
   "id": "/PiApp",

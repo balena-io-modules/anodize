@@ -24,7 +24,7 @@ The harvest workflow looks like this:
 
 ``` js
 const harvest = require('resin-harvest')
-const DOMInterpreter = require('resin-harvest/DOMInterpreter')
+const DOMInterpreter = require('resin-harvest/interpreters/dom')
 const schema = {
   "type": "object",
   "properties": {
@@ -56,6 +56,40 @@ harvest.gather({ schema, interpreter })
 
 ### Interpreters
 
+Interpreters provide the interface for users to input values.
+
+Interpreters are loaded separately to the core harvest code so that
+your application is not bloated by functionality you don't need.
+
+There are currently two interpreters that are bundled with harvest:
+
+#### Dom
+
+The dom interpreter injects an HTML form onto a page. The interpreter is
+loaded with `require('resin-harver/interpreters/dom')`.
+It must be instantiated with a DOM node that will act as the root parent
+element of the form.
+
+#### CLI
+
+The CLI interpreter uses the command line to gather information
+from a user. The interpreter is loaded with `require('resin-harver/interpreters/cli')`.
+
+#### Creating your own interpreter
+
+You can provide your own interpreter instead of one bundled with
+resin-harvest. Interpreters should typically extend the nodejs
+[EventEmitter][eventemitter] class, though this is not a strict requirement.
+
+An interpreter must have a `.run()` method that takes a JSON schema as
+a parameter. The `.run()` method should begin the data gathering process.
+
+An interpreter must expose a `.on()` method that behaves in the same way
+as the EventEmitter [`emiiter.on()`][eventemitter.on] method.
+
+Once the data gathering process has finished, the interpreter should
+emit an event named 'done' along with a payload that complies with the
+provided schema. 
 
 ### Example
 
@@ -145,3 +179,5 @@ const schema2 = Harvest.expand(model2)
 
 
 [jsonschema]: http://json-schema.org/
+[eventemitter]: https://nodejs.org/api/events.html#events_class_eventemitter
+[eventemitter.on]: https://nodejs.org/api/events.html#events_class_eventemitter
