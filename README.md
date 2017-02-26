@@ -1,6 +1,10 @@
 ## Anodize
 
-Anodize provides a platform agnostic way to gather information from your users.  
+Anodize provides a platform agnostic way to gather information from your users using JSON models.  
+
+[![Build Status](https://travis-ci.org/resin-io-modules/anodize.svg?branch=master)](https://travis-ci.org/resin-io-modules/anodize)
+
+***
 
 The required information is provided as a model schema which is
 used to generate a JSON object by asking the user to fill out data,
