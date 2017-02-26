@@ -11,7 +11,7 @@ const load = () => {
   rootNode.innerHTML = ''
 
   const schema = JSON.parse(schemaNode.innerText)
-  const interpreter = new DOMInterpreter(rootNode)
+  const interpreter = DOMInterpreter(rootNode)
 
   const onUpdate = (payload) => {
     console.log(payload)
@@ -66,7 +66,7 @@ class DOMInterpreter extends EventEmitter {
   }
 }
 
-module.exports = DOMInterpreter
+module.exports = (node) => new DOMInterpreter(node)
 
 },{"events":82,"react":339,"react-dom":153,"react-jsonschema-form":312}],3:[function(require,module,exports){
 var asn1 = exports;

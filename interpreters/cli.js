@@ -107,4 +107,4 @@ class CliInterpreter extends EventEmitter {
   }
 }
 
-module.exports = CliInterpreter
+module.exports = () => new CliInterpreter()

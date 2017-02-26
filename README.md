@@ -37,7 +37,7 @@ const schema = {
   ]
 }
 
-const interpreter = new DOMInterpreter(document.getElementById('root'))
+const interpreter = DOMInterpreter(document.getElementById('root'))
 
 harvest.gather({ schema, interpreter })
 .then(result =>
@@ -67,8 +67,8 @@ There are currently two interpreters that are bundled with harvest:
 
 The dom interpreter injects an HTML form onto a page. The interpreter is
 loaded with `require('resin-harver/interpreters/dom')`.
-It must be instantiated with a DOM node that will act as the root parent
-element of the form.
+The factory function must be called with the DOM node that the form
+will be injected into.
 
 #### CLI
 
@@ -144,8 +144,8 @@ if they are provided then they are used by the interpreter when
 gathering information.
 
 Alternatively the schema can be generated from a plain javascript object using
-the `Harvest.expand()` method. Values can optionally be provided as type
-constructors, otherwise they are automatically detected.
+the `Harvest.expand()` method. You can optionally provide a value as
+a primitive wrapper object, otherwise the type is automatically detected.
 
 ``` js
 const model = {

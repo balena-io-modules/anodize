@@ -24,4 +24,4 @@ class DOMInterpreter extends EventEmitter {
   }
 }
 
-module.exports = DOMInterpreter
+module.exports = (node) => new DOMInterpreter(node)
