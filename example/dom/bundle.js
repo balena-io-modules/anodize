@@ -1,5 +1,5 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
-const harvest = require('../../src')
+const anodize = require('../../src')
 const DOMInterpreter = require('../../interpreters/dom')
 
 const outputNode = document.getElementById('output')
@@ -18,7 +18,7 @@ const load = () => {
     outputNode.innerHTML = '\r' + JSON.stringify(payload, null, 2)
   }
 
-  harvest.gather({
+  anodize.extract({
     schema,
     interpreter,
     onUpdate
@@ -33,7 +33,7 @@ load()
 
 const expand = () => {
   const exampleSchema = JSON.parse(schemaNode.innerText)
-  schemaNode.innerHTML = '\r' + JSON.stringify(harvest.expand(exampleSchema), null, 2)
+  schemaNode.innerHTML = '\r' + JSON.stringify(anodize.expand(exampleSchema), null, 2)
 }
 
 document.getElementById('reloadBtn').addEventListener('click', load, false)
@@ -66993,7 +66993,7 @@ exports.expand = (object) => {
   return jsonSchemaGenerator(mapTypes(clone))
 }
 
-exports.gather = (options) => {
+exports.extract = (options) => {
   return new Promise((resolve) => {
     const { interpreter, schema, onUpdate } = options
     interpreter.run(schema)

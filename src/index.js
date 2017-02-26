@@ -31,7 +31,7 @@ exports.expand = (object) => {
   return jsonSchemaGenerator(mapTypes(clone))
 }
 
-exports.gather = (options) => {
+exports.extract = (options) => {
   return new Promise((resolve) => {
     const { interpreter, schema, onUpdate } = options
     interpreter.run(schema)

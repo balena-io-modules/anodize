@@ -1,4 +1,4 @@
-const harvest = require('../../src')
+const anodize = require('../../src')
 
 const model = {
   quickBoot: Boolean,
@@ -15,4 +15,4 @@ const model = {
   ]
 }
 
-console.log(harvest.expand(model))
+console.log(anodize.expand(model))

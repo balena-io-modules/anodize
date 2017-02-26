@@ -1,5 +1,5 @@
 {
-  "name": "resin-harvest",
+  "name": "anodize",
   "version": "0.2.0",
   "description": "Gather user input using JSON schemas",
   "main": "src/index.js",
