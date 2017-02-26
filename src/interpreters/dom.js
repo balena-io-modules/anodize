@@ -1,9 +1,9 @@
 const React = require('react')
 const { render } = require('react-dom')
 const Form = require('react-jsonschema-form').default
-const Emitter = require('../class/emitter')
+const EventEmitter = require('events')
 
-class DOMInterpreter extends Emitter {
+class DOMInterpreter extends EventEmitter {
   constructor(rootElement) {
     super()
     this.rootElement = rootElement

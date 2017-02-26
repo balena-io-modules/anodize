@@ -1,5 +1,5 @@
 const schinquirer = require('inquirer')
-const Emitter = require('../class/emitter')
+const EventEmitter = require('events')
 const _ = require('lodash')
 const chalk = require('chalk')
 
@@ -68,7 +68,7 @@ const stringQuestion = (key, source, multi) => {
   return question
 }
 
-class CliInterpreter extends Emitter {
+class CliInterpreter extends EventEmitter {
   constructor() {
     super()
   }

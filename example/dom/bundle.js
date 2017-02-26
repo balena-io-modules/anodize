@@ -39,7 +39,7 @@ const expand = () => {
 document.getElementById('reloadBtn').addEventListener('click', load, false)
 document.getElementById('expandBtn').addEventListener('click', expand, false)
 
-},{"../../src":367,"../../src/interpreters/dom":368}],2:[function(require,module,exports){
+},{"../../src":366,"../../src/interpreters/dom":367}],2:[function(require,module,exports){
 var asn1 = exports;
 
 asn1.bignum = require('bn.js');
@@ -66931,30 +66931,6 @@ exports.createContext = Script.createContext = function (context) {
 };
 
 },{"indexof":114}],366:[function(require,module,exports){
-class Emitter {
-  constructor() {
-    this.channels = {}
-  }
-
-  emit(channel, payload) {
-    if (!this.channels.hasOwnProperty(channel)) {
-      return
-    }
-
-    this.channels[channel].forEach((callback) => callback(payload))
-  }
-
-  on(channel, callback) {
-    if (!this.channels.hasOwnProperty(channel)) {
-      this.channels[channel] = []
-    }
-    this.channels[channel].push(callback)
-  }
-}
-
-module.exports = Emitter
-
-},{}],367:[function(require,module,exports){
 const jsonSchemaGenerator = require('json-schema-generator')
 const _ = require('lodash')
 
@@ -67000,13 +66976,13 @@ exports.gather = (options) => {
   })
 }
 
-},{"json-schema-generator":118,"lodash":128}],368:[function(require,module,exports){
+},{"json-schema-generator":118,"lodash":128}],367:[function(require,module,exports){
 const React = require('react')
 const { render } = require('react-dom')
 const Form = require('react-jsonschema-form').default
-const Emitter = require('../class/emitter')
+const EventEmitter = require('events')
 
-class DOMInterpreter extends Emitter {
+class DOMInterpreter extends EventEmitter {
   constructor(rootElement) {
     super()
     this.rootElement = rootElement
@@ -67029,4 +67005,4 @@ class DOMInterpreter extends Emitter {
 
 module.exports = DOMInterpreter
 
-},{"../class/emitter":366,"react":338,"react-dom":152,"react-jsonschema-form":311}]},{},[1]);
+},{"events":81,"react":338,"react-dom":152,"react-jsonschema-form":311}]},{},[1]);
