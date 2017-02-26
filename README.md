@@ -21,6 +21,7 @@ The anodize workflow looks like this:
 
 ### Example
 
+See anodize in action by [clicking here][domexample].
 For an example of how to use anodize in the browser, take a look
 at the examples folder.
 
@@ -180,3 +181,4 @@ const schema2 = anodize.expand(model2)
 [jsonschema]: http://json-schema.org/
 [eventemitter]: https://nodejs.org/api/events.html#events_class_eventemitter
 [eventemitter.on]: https://nodejs.org/api/events.html#events_class_eventemitter
+[domexample]: https://resin-io-modules.github.io/anodize/example/dom/index.html
