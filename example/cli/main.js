@@ -1,6 +1,8 @@
 const harvest = require('../../src')
 const CliInterpreter = require('../../interpreters/cli')
 
+const interpreter = CliInterpreter()
+
 const schema = {
   "id": "/PiApp",
   "type": "object",
@@ -46,8 +48,6 @@ const schema = {
   },
   "required": ["gpuMemory", "wifi"]
 }
-
-const interpreter = new CliInterpreter()
 
 harvest.gather({
   interpreter,

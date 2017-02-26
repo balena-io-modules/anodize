@@ -10,7 +10,7 @@ const load = () => {
   rootNode.innerHTML = ''
 
   const schema = JSON.parse(schemaNode.innerText)
-  const interpreter = new DOMInterpreter(rootNode)
+  const interpreter = DOMInterpreter(rootNode)
 
   const onUpdate = (payload) => {
     console.log(payload)
