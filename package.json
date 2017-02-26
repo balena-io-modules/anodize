@@ -4,7 +4,7 @@
   "description": "Gather user input using JSON schemas",
   "main": "src/index.js",
   "scripts": {
-    "test": "node tests/*.js",
+    "test": "tape 'tests/**/*.test.js'",
     "lint": "eslint src",
     "example-build": "browserify example/dom/main.js -o example/dom/bundle.js",
     "example-watch": "watchify example/dom/main.js -o example/dom/bundle.js -v",
