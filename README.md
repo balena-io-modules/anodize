@@ -75,14 +75,14 @@ There are currently two interpreters that are bundled with anodize:
 #### Dom
 
 The dom interpreter injects an HTML form onto a page. The interpreter is
-loaded with `require('resin-harver/interpreters/dom')`.
+loaded with `require('anodize/interpreters/dom')`.
 The factory function must be called with the DOM node that the form
 will be injected into.
 
 #### CLI
 
 The CLI interpreter uses the command line to gather information
-from a user. The interpreter is loaded with `require('resin-harver/interpreters/cli')`.
+from a user. The interpreter is loaded with `require('anodize/interpreters/cli')`.
 
 #### Creating your own interpreter
 
